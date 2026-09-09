@@ -285,6 +285,10 @@
     category: Knowledge / Finance
     paper: https://huggingface.co/datasets/cindy90/BuySideFinBench
     configpath: opencompass/configs/datasets/BuySideFinBench/BuySideFinBench_gen.py
+- vfillm:
+    name: V-FiLLM
+    category: Reasoning / Finance
+    configpath: opencompass/configs/datasets/VFiLLM/VFiLLM_gen.py
     configpath_llmjudge: ''
 - finalceiq:
     name: FinanceIQ
