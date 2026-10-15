@@ -140,6 +140,9 @@ def do_setup():
             'api':
             parse_requirements('requirements/api.txt') +
             parse_requirements('requirements/runtime.txt'),
+            'over_editing':
+            parse_requirements('requirements/over_editing.txt') +
+            parse_requirements('requirements/runtime.txt'),
             'vlm':
             parse_requirements('requirements/vlm.txt') +
             parse_requirements('requirements/runtime.txt'),
