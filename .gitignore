@@ -124,6 +124,7 @@ turbomind/
 *.gz.*
 *.png
 *.txt
+!requirements/over_editing.txt
 *.jpg
 *.json
 *.jsonl

@@ -58,6 +58,12 @@
     paper: https://arxiv.org/pdf/2406.15877
     configpath: opencompass/configs/datasets/bigcodebench/bigcodebench_gen.py
     configpath_llmjudge: ''
+- over_editing:
+    name: When Models Edit Too Much
+    category: Code
+    paper: https://arxiv.org/abs/2609.04061
+    configpath: opencompass/configs/datasets/over_editing/over_editing_gen.py
+    configpath_llmjudge: ''
 - calm:
     name: CaLM
     category: Reasoning
