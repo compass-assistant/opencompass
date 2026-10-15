@@ -46,6 +46,12 @@
     paper: https://arxiv.org/pdf/2406.10149
     configpath: opencompass/configs/datasets/babilong
     configpath_llmjudge: ''
+- backtrend:
+    name: BackTrend
+    category: Science
+    paper: https://github.com/rebeccaz4/BackTrend/tree/fda6a30d52c82e8a10fb377c8ce0ab884f00469d
+    configpath: opencompass/configs/datasets/backtrend/backtrend_gen.py
+    configpath_llmjudge: opencompass/configs/datasets/backtrend/backtrend_gen.py
 - aa_lcr:
     name: AA-LCR
     category: Long Context
