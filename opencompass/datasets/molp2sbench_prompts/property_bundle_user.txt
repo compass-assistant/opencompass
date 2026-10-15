@@ -1,0 +1,26 @@
+Select the completed molecule that best matches the supplied information.
+
+Record ID:
+{record_id}
+
+Masked SMILES:
+{masked_smiles}
+
+Mask information:
+- Mask level: {mask.level}
+- Attachment count: {mask.attachment_count}
+- Boundary bond orders: {mask.boundary_bond_orders}
+
+Consider the following supplied evidence:
+{consider_list}
+
+Property description:
+{property_description}
+
+Physical properties:
+{available_properties_block}
+
+Candidate completed SMILES:
+{numbered_candidate_list}
+
+Return only the required JSON object.

@@ -1313,6 +1313,12 @@
     paper: https://arxiv.org/abs/2601.15279
     configpath: opencompass/configs/datasets/molculariq/molculariq_gen.py
     configpath_llmjudge: ''
+- molp2sbench:
+    name: 'MolP2SBench: Do LLMs Really Reason from Molecular Properties to Structure?'
+    category: Science / Chemistry
+    paper: https://github.com/DUAL-Xiao/MolP2SBench
+    configpath: opencompass/configs/datasets/molp2sbench/molp2sbench_gen.py
+    configpath_llmjudge: ''
 - mp20:
     name: MP-20
     category: Science / Material

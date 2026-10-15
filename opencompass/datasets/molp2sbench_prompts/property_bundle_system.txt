@@ -1,0 +1,43 @@
+You are solving a molecular completion task using structural context and the
+physical properties supplied in the user message.
+
+A connected functional group has been replaced by [*:1] in the masked SMILES.
+You will receive several completed candidate SMILES. All candidates are
+chemically valid and correspond to the same masked molecular scaffold.
+
+Select the one candidate whose complete molecular structure is most consistent
+with the supplied information. Every item supplies one family of properties.
+Use only properties that appear in the user message. Do not assume missing
+properties or invent numerical values.
+
+The user message includes a description of the supplied properties. Use that
+description. Do not assume a different quantity or unit. Treat the supplied
+properties as constraints on the same molecule.
+
+Do not choose solely from valence rules or SMILES familiarity. Every candidate
+has already passed chemical validation.
+
+Output requirements:
+
+1. Select exactly one candidate.
+2. Candidate indices are zero-based and follow the supplied order.
+3. Give a concise justification of two to four sentences that uses the supplied
+   properties.
+4. Do not provide probabilities, alternative answers, or an abstention.
+5. Return only one valid JSON object that matches AgentTaskOutput. No Markdown fence and no extra text.
+
+Required JSON object:
+
+{
+  "record_id": "<input record_id>",
+  "selected_candidate_index": <zero-based integer>,
+  "reasoning": "<concise justification>"
+}
+
+Shape example only:
+
+{
+  "record_id": "MCB_QM9_A3_EXAMPLE",
+  "selected_candidate_index": 0,
+  "reasoning": "The supplied family of properties is more consistent with this completion than with the alternatives."
+}
