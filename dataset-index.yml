@@ -52,6 +52,12 @@
     paper: https://huggingface.co/datasets/ArtificialAnalysis/AA-LCR
     configpath: opencompass/configs/datasets/aa_lcr/aa_lcr_gen.py
     configpath_llmjudge: opencompass/configs/datasets/aa_lcr/aa_lcr_gen.py
+- croissantminer:
+    name: CroissantMiner
+    category: Long Context
+    paper: https://github.com/berkearda/croissantminer
+    configpath: opencompass/configs/datasets/CroissantMiner/croissantminer_gen.py
+    configpath_llmjudge: opencompass/configs/datasets/CroissantMiner/croissantminer_gen.py
 - bigcodebench:
     name: BigCodeBench
     category: Code

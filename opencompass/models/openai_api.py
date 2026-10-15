@@ -749,6 +749,7 @@ class OpenAISDK(OpenAI):
         think_tag: str = '</think>',
         max_workers: Optional[int] = None,
         openai_extra_kwargs: Dict | None = None,
+        max_tokens_param: Optional[str] = None,
         timeout: int = 3600,
         image_format: str | None = None,
         image_min_edge: int | None = None,
@@ -790,6 +791,11 @@ class OpenAISDK(OpenAI):
         self.status_code_mappings = status_code_mappings
         self.think_tag = think_tag
         self.openai_extra_kwargs = openai_extra_kwargs
+        if max_tokens_param not in (None, 'max_tokens',
+                                    'max_completion_tokens'):
+            raise ValueError('max_tokens_param must be max_tokens, '
+                             'max_completion_tokens, or None')
+        self.max_tokens_param = max_tokens_param
 
     def _create_fresh_client(self):
         """Create a fresh OpenAI client."""
@@ -841,27 +847,23 @@ class OpenAISDK(OpenAI):
 
         num_retries = 0
         while num_retries < self.retry:
-            if any(model in self.path for model in OAI_REASONING_MODEL_LIST):
+            is_reasoning_model = any(
+                model in self.path for model in OAI_REASONING_MODEL_LIST)
+            if is_reasoning_model:
                 self.logger.warning(
                     f"'max_token' is unsupported for model {self.path}")
                 self.logger.warning(
                     f'We use max_out_len: {max_out_len} for this query')
-                query_data = dict(
-                    model=self.path,
-                    max_completion_tokens=max_out_len,
-                    n=1,
-                    messages=messages,
-                    extra_body=self.extra_body,
-                )
-            else:
-                query_data = dict(
-                    model=self.path,
-                    max_tokens=max_out_len,
-                    n=1,
-                    temperature=self.temperature,
-                    messages=messages,
-                    extra_body=self.extra_body,
-                )
+            token_parameter = self.max_tokens_param or (
+                'max_completion_tokens' if is_reasoning_model
+                else 'max_tokens')
+            query_data = dict(model=self.path,
+                              n=1,
+                              messages=messages,
+                              extra_body=self.extra_body)
+            query_data[token_parameter] = max_out_len
+            if not is_reasoning_model or self.max_tokens_param is not None:
+                query_data['temperature'] = self.temperature
 
             if self.openai_extra_kwargs:
                 query_data.update(self.openai_extra_kwargs)
