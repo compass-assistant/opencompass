@@ -1063,6 +1063,12 @@
     paper: https://arxiv.org/pdf/1907.10641v2
     configpath: opencompass/configs/datasets/winogrande/winogrande_gen.py
     configpath_llmjudge: ''
+- wearableqa:
+    name: WearableQA
+    category: Knowledge / Medicine
+    paper: https://arxiv.org/abs/2609.05405
+    configpath: opencompass/configs/datasets/wearableqa/wearableqa_cot_gen.py
+    configpath_llmjudge: ''
 - xcopa:
     name: XCOPA
     category: Language

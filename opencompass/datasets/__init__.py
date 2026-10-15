@@ -206,6 +206,7 @@ from .truthfulqa import *  # noqa: F401, F403
 from .tydiqa import *  # noqa: F401, F403
 from .vlmevalkit import VLMEvalKitDataset  # noqa: F401
 from .wic import *  # noqa: F401, F403
+from .wearableqa import *  # noqa: F401, F403
 from .wikibench import *  # noqa: F401, F403
 from .winograd import *  # noqa: F401, F403
 from .winogrande import *  # noqa: F401, F403
