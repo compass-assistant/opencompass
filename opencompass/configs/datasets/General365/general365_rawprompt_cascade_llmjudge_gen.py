@@ -1,34 +1,17 @@
-from opencompass.datasets import (General365Dataset,
-                                  general365_llmjudge_postprocess)
-from opencompass.evaluator import (CascadeEvaluator, GenericLLMEvaluator,
-                                   MATHVerifyEvaluator)
+"""General365 public test split, official zero-shot hybrid evaluation."""
+
+from opencompass.datasets import General365Dataset, General365Evaluator
+from opencompass.models import OpenAISDK
 from opencompass.openicl.icl_inferencer import GenInferencer
 from opencompass.openicl.icl_raw_prompt_template import RawPromptTemplate
 from opencompass.openicl.icl_retriever import ZeroRetriever
 
-DATASET_PATH = 'meituan-longcat/General365_Public'
-
-JUDGE_SYSTEM_PROMPT = """You are an expert evaluator for question answering systems.
-Your task is to determine if a prediction correctly answers a question based on the ground truth.
-
-Rules:
-1. The prediction is correct if it captures all the key information from the ground truth.
-2. The prediction is correct even if phrased differently as long as the meaning is the same.
-3. The prediction is incorrect if it contains incorrect information or is missing essential details.
-4. Do not challenge the correctness of the standard answer.
-5. If the standard answer includes multiple possibilities, the prediction must include all and only those possibilities to be considered correct.
-Output a JSON object with a single field 'accuracy' whose value is true or false."""
-
-JUDGE_PROMPT = """Question: {question}
-Ground truth: {answer}
-Prediction: {prediction}"""
-
-reader_cfg = dict(
-    input_columns=['question', 'answer_type', 'float_round', 'id'],
+general365_reader_cfg = dict(
+    input_columns=['question'],
     output_column='answer',
 )
 
-infer_cfg = dict(
+general365_infer_cfg = dict(
     prompt_template=dict(
         type=RawPromptTemplate,
         messages=[dict(role='user', content='{question}')],
@@ -37,54 +20,40 @@ infer_cfg = dict(
     inferencer=dict(type=GenInferencer),
 )
 
-
-def _llm_evaluator(dataset_cfg):
-    return dict(
-        type=GenericLLMEvaluator,
-        prompt_template=dict(
-            type=RawPromptTemplate,
-            messages=[
-                dict(role='system', content=JUDGE_SYSTEM_PROMPT),
-                dict(role='user', content=JUDGE_PROMPT),
-            ],
-        ),
-        dataset_cfg=dataset_cfg,
-        judge_cfg=dict(),
-        dict_postprocessor=dict(type=general365_llmjudge_postprocess),
-    )
-
-
-math_dataset_cfg = dict(
-    type=General365Dataset,
-    path=DATASET_PATH,
-    answer_types=['number', 'interval'],
-    reader_cfg=reader_cfg,
-)
-
-text_dataset_cfg = dict(
-    type=General365Dataset,
-    path=DATASET_PATH,
-    answer_types=['text', 'single_choice', 'multiple_choice'],
-    reader_cfg=reader_cfg,
+general365_judge_cfg = dict(
+    type=OpenAISDK,
+    # Released scorer default. Paper-result reproduction uses GPT-4.1.
+    path='gpt-4.1-mini',
+    key='ENV',
+    openai_api_base='https://api.openai.com/v1/',
+    max_out_len=8192,
+    max_seq_len=65536,
+    batch_size=1024,
+    temperature=0.0,
+    retry=1,
+    timeout=3600,
+    max_workers=16,
+    query_per_second=16,
+    openai_extra_kwargs=dict(
+        stream=False,
+        response_format=dict(type='json_object'),
+    ),
 )
 
 general365_datasets = [
     dict(
-        abbr='General365-mathverify',
-        **math_dataset_cfg,
-        infer_cfg=infer_cfg,
+        type=General365Dataset,
+        abbr='General365',
+        path='meituan-longcat/General365_Public',
+        revision='e6f063d0a74c51baa101204533823dd54b0c577b',
+        split='test',
+        reader_cfg=general365_reader_cfg,
+        infer_cfg=general365_infer_cfg,
         eval_cfg=dict(
             evaluator=dict(
-                type=CascadeEvaluator,
-                rule_evaluator=dict(type=MATHVerifyEvaluator),
-                llm_evaluator=_llm_evaluator(math_dataset_cfg),
-                parallel=False,
-            )),
-    ),
-    dict(
-        abbr='General365-text',
-        **text_dataset_cfg,
-        infer_cfg=infer_cfg,
-        eval_cfg=dict(evaluator=_llm_evaluator(text_dataset_cfg)),
-    ),
+                type=General365Evaluator,
+                judge_cfg=general365_judge_cfg,
+            ),
+        ),
+    )
 ]

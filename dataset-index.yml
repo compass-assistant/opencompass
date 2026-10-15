@@ -1,3 +1,9 @@
+- general365:
+    name: General365
+    category: Reasoning
+    paper: https://huggingface.co/datasets/meituan-longcat/General365_Public
+    configpath: opencompass/configs/datasets/General365/general365_rawprompt_cascade_llmjudge_gen.py
+    configpath_llmjudge: opencompass/configs/datasets/General365/general365_rawprompt_cascade_llmjudge_gen.py
 - ifeval:
     name: IFEval
     category: Instruction Following
