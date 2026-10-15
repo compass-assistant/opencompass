@@ -124,6 +124,7 @@ turbomind/
 *.gz.*
 *.png
 *.txt
+!opencompass/datasets/molp2sbench_prompts/*.txt
 *.jpg
 *.json
 *.jsonl

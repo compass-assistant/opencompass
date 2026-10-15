@@ -139,6 +139,7 @@ from .mmlu_pro import *  # noqa: F401, F403
 from .MMLUArabic import *  # noqa: F401, F403
 from .mmmlu import *  # noqa: F401, F403
 from .mol_instructions_chem import *  # noqa: F401, F403
+from .molp2sbench import *  # noqa: F401, F403
 from .moleculariq import *  # noqa: F401, F403
 from .mp20 import *  # noqa: F401, F403
 from .mrcr import *  # noqa: F401, F403
