@@ -1,3 +1,9 @@
+- fakecontextbench:
+    name: FakeContextBench v6
+    category: Reasoning
+    paper: https://arxiv.org/abs/2609.27603
+    configpath: opencompass/configs/datasets/fakecontextbench/fakecontextbench_gen_0c1018.py
+    configpath_llmjudge: ''
 - ifeval:
     name: IFEval
     category: Instruction Following
