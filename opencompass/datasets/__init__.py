@@ -71,8 +71,7 @@ from .flores import *  # noqa: F401, F403
 from .game24 import *  # noqa: F401, F403
 from .gaokao_math import *  # noqa: F401, F403
 from .GaokaoBench import *  # noqa: F401, F403
-from .general365 import General365Dataset  # noqa: F401
-from .general365 import general365_llmjudge_postprocess  # noqa: F401
+from .general365 import General365Dataset, General365Evaluator  # noqa: F401
 from .generic import *  # noqa: F401, F403
 from .govrepcrs import *  # noqa: F401, F403
 from .gpqa import *  # noqa: F401, F403
