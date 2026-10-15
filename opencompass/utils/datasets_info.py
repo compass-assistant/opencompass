@@ -1,4 +1,9 @@
 DATASETS_MAPPING = {
+    "opencompass/regextract": {
+        "ms_id": None,
+        "hf_id": None,
+        "local": "./data/PFAS-regulations-842a78ca45a3d426a5b4613181268236b5c60593",
+    },
     "opencompass/AA-LCR":{
         "ms_id": None,
         "hf_id": None,
@@ -692,6 +697,10 @@ DATASETS_MAPPING = {
 }
 
 DATASETS_URL = {
+    "/PFAS-regulations-842a78ca45a3d426a5b4613181268236b5c60593": {
+        "url": "https://github.com/IBM/PFAS-regulations/archive/842a78ca45a3d426a5b4613181268236b5c60593.zip",
+        "md5": "69fe4c16cdeedd1c5af8bad745dbed94",
+    },
     "/AA-LCR": {
         "url":"http://opencompass.oss-cn-shanghai.aliyuncs.com/datasets/data/aa_lcr.zip",
         "md5":"d795853a0897f69afa23df955ea8f68f",

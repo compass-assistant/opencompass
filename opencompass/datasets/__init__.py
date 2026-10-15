@@ -173,6 +173,9 @@ from .rbench import *  # noqa: F401, F403
 from .realtoxicprompts import *  # noqa: F401, F403
 from .reasonbench import ReasonBenchDataset  # noqa: F401, F403
 from .record import *  # noqa: F401, F403
+from .regextract import (RegExtractDataset, RegExtractEvaluator,  # noqa: F401
+                         parse_regextract_prediction,
+                         score_regextract_document)
 from .ruler import *  # noqa: F401, F403
 from .s2_tomg_bench import *  # noqa: F401, F403
 from .safety import *  # noqa: F401, F403
