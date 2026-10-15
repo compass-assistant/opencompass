@@ -197,6 +197,49 @@ class TestOpenAI(unittest.TestCase):
 class TestOpenAISDK(unittest.TestCase):
     """Test cases for OpenAISDK."""
 
+    def test_explicit_completion_token_parameter_reaches_native_request(self):
+        """Provider-compatible token spelling must not change other fields."""
+        model = OpenAISDK.__new__(OpenAISDK)
+        model.logger = MagicMock()
+        model.retry = 1
+        model.path = 'judge-model'
+        model.max_seq_len = 100000
+        model.mode = 'none'
+        model.temperature = 0.0
+        model.extra_body = None
+        model.max_tokens_param = 'max_completion_tokens'
+        model.openai_extra_kwargs = {
+            'response_format': {
+                'type': 'json_object'
+            }
+        }
+        model.timeout = 901
+        model.verbose = False
+        model.status_code_mappings = {}
+        model.think_tag = '</think>'
+        model.get_token_len = MagicMock(return_value=1)
+        model.acquire = MagicMock()
+        model.release = MagicMock()
+        model._preprocess_messages = MagicMock(
+            return_value=([{'role': 'user', 'content': 'score'}], 4000))
+        model._messages_to_chat_completions = MagicMock(
+            side_effect=lambda messages: messages)
+        response = MagicMock()
+        response.choices = [MagicMock()]
+        response.choices[0].message.content = '{"score": 1}'
+        response.choices[0].message.reasoning_content = None
+        model.openai_client = MagicMock()
+        model.openai_client.chat.completions.create.return_value = response
+
+        assert model._generate('score', 4000, 0.0) == '{"score": 1}'
+
+        kwargs = model.openai_client.chat.completions.create.call_args.kwargs
+        assert kwargs['max_completion_tokens'] == 4000
+        assert 'max_tokens' not in kwargs
+        assert kwargs['temperature'] == 0.0
+        assert kwargs['response_format'] == {'type': 'json_object'}
+        assert kwargs['timeout'] == 901
+
     @patch('opencompass.models.openai_api.tiktoken', create=True)
     @patch('openai.OpenAI')
     @patch('httpx.Client')

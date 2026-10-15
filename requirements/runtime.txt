@@ -23,6 +23,7 @@ opencv-python-headless
 pandas
 prettytable
 protobuf
+PyPDF2==3.0.1
 # pyext
 python-Levenshtein
 rank_bm25==0.2.2
