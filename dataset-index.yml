@@ -1345,6 +1345,12 @@
       - opencompass/configs/datasets/perspectivegap/perspectivegap_prompt_writing_gen_0f36c7.py
       - opencompass/configs/datasets/perspectivegap/perspectivegap_role_assignment_gen_0f36c7.py
     configpath_llmjudge: ''
+- petribench:
+    name: PetriBench
+    category: Reasoning
+    paper: https://arxiv.org/abs/2609.19883
+    configpath: opencompass/configs/datasets/petribench/petribench_gen.py
+    configpath_llmjudge: ''
 - promptbench:
     name: PromptBench
     category: Safety
